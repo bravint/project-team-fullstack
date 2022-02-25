@@ -1,4 +1,4 @@
-const { prisma, isModerator } = require('../utils');
+const { prisma, isModerator, jwt } = require('../utils');
 
 const getPost = async (req, res) => {
     const id = req.params.id;
@@ -20,19 +20,17 @@ const getPost = async (req, res) => {
 };
 
 const editPost = async (req, res) => {
-    const id = req.params.id;
+    const id = parseInt(req.params.id, 10);
 
-    const post = req.body;
+    const { title, content, userId } = req.body;
 
     const token = req.headers.authorization;
 
     const decodedToken = jwt.decode(token);
 
-    const payload = decodedToken.payload;
+    const tokenId = decodedToken.id;
 
-    const tokenId = payload.id;
-
-    if (post.userId !== tokenId || !isModerator) {
+    if (userId !== tokenId || !isModerator) {
         return res.status(400).json('error');
     }
 
@@ -41,7 +39,16 @@ const editPost = async (req, res) => {
             id,
         },
         data: {
-            ...post,
+            title,
+            content,
+            userId,
+        },
+        include: {
+            tags: {
+                include: {
+                    tag: true,
+                },
+            },
         },
     });
 
@@ -49,20 +56,20 @@ const editPost = async (req, res) => {
 };
 
 const deletePost = async (req, res) => {
-    const id = req.params.id;
+    const id = parseInt(req.params.id, 10);
 
     const isRemoved = { isRemoved: true };
 
-    await prisma.post.update({
+    const deletedPost  = await prisma.post.update({
         where: {
             id,
         },
-        update: {
+        data: {
             ...isRemoved,
         },
     });
 
-    res.status(201).json('post deleted');
+    res.status(201).json(deletedPost);
 };
 
 const getComment = async (req, res) => {
@@ -82,7 +89,7 @@ const getComment = async (req, res) => {
 };
 
 const editComment = async (req, res) => {
-    const id = req.params.id;
+    const id = parseInt(req.params.id, 10);
 
     const comment = req.body;
 
@@ -90,11 +97,9 @@ const editComment = async (req, res) => {
 
     const decodedToken = jwt.decode(token);
 
-    const payload = decodedToken.payload;
+    const tokenId = decodedToken.id;
 
-    const tokenId = payload.id;
-
-    if (post.userId !== tokenId || !isModerator) {
+    if (comment.userId !== tokenId || !isModerator) {
         return res.status(400).json('error');
     }
 

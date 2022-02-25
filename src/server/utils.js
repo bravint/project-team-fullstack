@@ -11,7 +11,8 @@ const saltRounds = 10;
 const capitalizeFirstLetter = (string) =>
     string.replace(/\b\w/g, (c) => c.toUpperCase());
 
-const hashedPassword = async (password) => bcrypt.hashSync(password, saltRounds);
+const hashedPassword = async (password) =>
+    bcrypt.hashSync(password, saltRounds);
 
 const createToken = (payload) => jwt.sign(payload, SECRET);
 
@@ -82,7 +83,7 @@ const createUser = async (req, res) => {
         },
     });
 
-    delete createdUser.password
+    delete createdUser.password;
 
     res.status(200).json({ data: createdUser });
 };
@@ -165,7 +166,14 @@ const createPost = async (req, res) => {
                         },
                     };
                 }),
-            }
+            },
+        },
+        include: {
+            tags: {
+                include: {
+                    tag: true,
+                },
+            },
         },
         include: {
             tags: {
@@ -239,6 +247,7 @@ const createRating = async (req, res) => {
 };
 
 module.exports = {
+    jwt,
     checkPassword,
     hashedPassword,
     createToken,
