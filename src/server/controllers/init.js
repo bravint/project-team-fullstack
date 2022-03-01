@@ -23,8 +23,6 @@ const { prisma } = require('../utils/prisma');
 
 const { capitalizeFirstLetter, generateRandomInt } = require('../utils/utils');
 
-const { getPokemonById } = require('./pokemon');
-
 const initPokemonDatabase = async (req, res) => {
     const numberOfPokemonToFetch = 151;
 
