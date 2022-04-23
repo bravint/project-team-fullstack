@@ -1,15 +1,17 @@
+const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+
 const USER_URL = {
-    USER_ROOT: 'http://localhost:4000/user/',
-    REGISTER: 'http://localhost:4000/user/register',
-    LOGIN: 'http://localhost:4000/user/login',
-    PROFILE: 'http://localhost:4000/user/profile',
-    POKEMON: 'http://localhost:4000/pokemon/',
-    POKEMON_RATING: 'http://localhost:4000/pokemon/rating',
+    USER_ROOT: `${SERVER_URL}/user/`,
+    REGISTER: `${SERVER_URL}/user/register`,
+    LOGIN: `${SERVER_URL}/user/login`,
+    PROFILE: `${SERVER_URL}/user/profile`,
+    POKEMON: `${SERVER_URL}/pokemon/`,
+    POKEMON_RATING: `${SERVER_URL}/pokemon/ratin`,
 };
 
 const FORUM_URL = {
-    POST: 'http://localhost:4000/post',
-    COMMENT: 'http://localhost:4000/post/comment',
+    POST: `${SERVER_URL}/post`,
+    COMMENT: `${SERVER_URL}/post/comment`,
 };
 
 const PAGE_LINK = {
