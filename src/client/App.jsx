@@ -20,9 +20,7 @@ const App = () => {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        localStorage.getItem(LOCAL_STORAGE.TOKEN)
-            ? setIsLoggedIn(true)
-            : setIsLoggedIn(false);
+        localStorage.getItem(LOCAL_STORAGE.TOKEN)? setIsLoggedIn(true): setIsLoggedIn(false);
     }, []);
 
     useEffect(() => {
