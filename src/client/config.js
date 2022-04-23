@@ -6,7 +6,7 @@ const USER_URL = {
     LOGIN: `${SERVER_URL}/user/login`,
     PROFILE: `${SERVER_URL}/user/profile`,
     POKEMON: `${SERVER_URL}/pokemon/`,
-    POKEMON_RATING: `${SERVER_URL}/pokemon/ratin`,
+    POKEMON_RATING: `${SERVER_URL}/pokemon/rating`,
 };
 
 const FORUM_URL = {
